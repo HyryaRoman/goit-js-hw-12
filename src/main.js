@@ -75,7 +75,7 @@ async function updateGallery(query) {
     const result = await getImagesByQuery(query);
 
     if (result.total === 0) {
-      showErrorNotification('No images found');
+      showInfoNotification('No images found');
       return;
     }
 
@@ -114,7 +114,7 @@ async function loadMoreImages() {
     const result = await getImagesByQuery(displayedQuery, nextPage);
 
     if (result.total === 0) {
-      showErrorNotification('No images found');
+      showInfoNotification('No images found');
       return;
     }
 
