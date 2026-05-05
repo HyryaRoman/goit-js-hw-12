@@ -110,7 +110,7 @@ async function loadMoreImages() {
   hideLoadMoreButton();
 
   try {
-    const result = await getImagesByQuery(lastQuery, nextPage);
+    const result = await getImagesByQuery(displayedQuery, nextPage);
 
     if (result.total === 0) {
       showErrorNotification('No images found');
