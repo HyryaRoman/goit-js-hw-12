@@ -4,9 +4,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const gallery = document.querySelector('.gallery');
 const galleryLoaderMessage = document.querySelector('.gallery-loader');
 const loadMoreButton = document.querySelector('.load-more-button');
-const noImagesToLoadMessage = document.querySelector('.no-more-images-message');
-
-let isGalleryEmpty = true;
 
 const galleryLightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -63,19 +60,10 @@ export function createGallery(images) {
   const markup = images.map(generateImageMarkup).join('');
   gallery.insertAdjacentHTML('beforeend', markup);
   galleryLightbox.refresh();
-
-  if (!isGalleryEmpty) {
-    const item = gallery.querySelector('.gallery-item');
-    const rect = item.getBoundingClientRect();
-    window.scrollBy({ top: rect.height * 2, behavior: 'smooth' });
-  }
-
-  isGalleryEmpty = false;
 }
 
 export function clearGallery() {
   gallery.innerHTML = '';
-  isGalleryEmpty = true;
 }
 
 export function showLoader() {
@@ -92,12 +80,4 @@ export function showLoadMoreButton() {
 
 export function hideLoadMoreButton() {
   loadMoreButton.style.display = 'none';
-}
-
-export function showNoMoreImagesMessage() {
-  noImagesToLoadMessage.style.display = 'inline-block';
-}
-
-export function hideNoMoreImagesMessage() {
-  noImagesToLoadMessage.style.display = 'none';
 }
