@@ -8,11 +8,14 @@ const pixabay = axios.create({
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    per_page: 15,
   },
 });
 
-export function getImagesByQuery(query = '') {
-  return pixabay
-    .request({ params: { q: query } })
-    .then(response => response.data.hits);
+export async function getImagesByQuery(query = '', page = 1) {
+  const result = await pixabay.request({ params: { q: query, page } });
+  return {
+    total: result.data.totalHits,
+    images: result.data.hits,
+  };
 }

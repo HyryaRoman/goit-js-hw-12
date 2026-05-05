@@ -3,7 +3,11 @@ import {
   clearGallery,
   createGallery,
   hideLoader,
+  hideLoadMoreButton,
+  hideNoMoreImagesMessage,
   showLoader,
+  showLoadMoreButton,
+  showNoMoreImagesMessage,
 } from './js/render-functions';
 
 import iziToast from 'izitoast';
@@ -34,19 +38,69 @@ function showErrorNotification(message) {
   console.error(message);
 }
 
-function updateGallery(query) {
+let shownImages = 0;
+let totalImages = 0;
+let nextPage = 1;
+let lastQuery = '';
+
+async function updateGallery(query) {
   if (!query) {
     showErrorNotification('Query is empty');
     return;
   }
 
+  lastQuery = query;
+  shownImages = 0;
   clearGallery();
   showLoader();
 
-  getImagesByQuery(query)
-    .then(createGallery)
-    .catch(showErrorNotification)
-    .finally(hideLoader);
+  try {
+    const result = await getImagesByQuery(query);
+    createGallery(result.images);
+    shownImages += result.images.length;
+    totalImages = result.total;
+    nextPage++;
+  } catch (e) {
+    showErrorNotification(e);
+  } finally {
+    hideLoader();
+  }
+
+  if (shownImages >= totalImages) {
+    showNoMoreImagesMessage();
+    hideLoadMoreButton();
+  } else {
+    hideNoMoreImagesMessage();
+    showLoadMoreButton();
+  }
+}
+
+async function loadMoreImages() {
+  if (shownImages >= totalImages) {
+    showErrorNotification('No more images to load');
+  }
+
+  showLoader();
+  hideLoadMoreButton();
+
+  try {
+    const result = await getImagesByQuery(lastQuery, nextPage);
+    createGallery(result.images);
+    shownImages += result.images.length;
+    nextPage++;
+  } catch (e) {
+    showErrorNotification(e);
+  } finally {
+    hideLoader();
+  }
+
+  if (shownImages >= totalImages) {
+    showNoMoreImagesMessage();
+    hideLoadMoreButton();
+  } else {
+    hideNoMoreImagesMessage();
+    showLoadMoreButton();
+  }
 }
 
 document.querySelector('form.search-form').addEventListener('submit', event => {
@@ -58,4 +112,10 @@ document.querySelector('form.search-form').addEventListener('submit', event => {
   else showErrorNotification('Query is empty');
 });
 
+document.querySelector('.load-more-button').addEventListener('click', _ => {
+  loadMoreImages();
+});
+
 hideLoader();
+hideLoadMoreButton();
+hideNoMoreImagesMessage();
