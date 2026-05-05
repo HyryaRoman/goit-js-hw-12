@@ -64,6 +64,7 @@ async function updateGallery(query) {
 
   clearGallery();
   showLoader();
+  hideLoadMoreButton();
 
   totalImageCount = 0;
   displayedImageCount = 0;
