@@ -1,5 +1,7 @@
-.gallery-loader {
-  text-align: center;
+.gallery-section {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .gallery {

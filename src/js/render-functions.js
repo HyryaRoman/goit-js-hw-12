@@ -3,6 +3,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const gallery = document.querySelector('.gallery');
 const galleryLoaderMessage = document.querySelector('.gallery-loader');
+const loadMoreButton = document.querySelector('.load-more-button');
+const noImagesToLoadMessage = document.querySelector('.no-more-images-message');
 
 const galleryLightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
@@ -71,4 +73,20 @@ export function showLoader() {
 
 export function hideLoader() {
   galleryLoaderMessage.style.display = 'none';
+}
+
+export function showLoadMoreButton() {
+  loadMoreButton.style.display = 'inline-block';
+}
+
+export function hideLoadMoreButton() {
+  loadMoreButton.style.display = 'none';
+}
+
+export function showNoMoreImagesMessage() {
+  noImagesToLoadMessage.style.display = 'inline-block';
+}
+
+export function hideNoMoreImagesMessage() {
+  noImagesToLoadMessage.style.display = 'none';
 }
