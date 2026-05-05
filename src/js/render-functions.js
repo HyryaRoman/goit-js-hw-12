@@ -6,6 +6,8 @@ const galleryLoaderMessage = document.querySelector('.gallery-loader');
 const loadMoreButton = document.querySelector('.load-more-button');
 const noImagesToLoadMessage = document.querySelector('.no-more-images-message');
 
+let isGalleryEmpty = true;
+
 const galleryLightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -33,7 +35,7 @@ function generateImageMarkup({
   return `
   <li class="gallery-item">
     <a class="gallery-link" href="${largeImageURL}">
-      <img class="gallery-image" src="${webformatURL}" alt="Tags: ${filterTags(tags)}.<br/><br/>Image by ${user} via Pixabay" />
+      <img class="gallery-image" src="${webformatURL}" height="200" alt="Tags: ${filterTags(tags)}.<br/><br/>Image by ${user} via Pixabay" />
       <ul class="gallery-item__notes">
         <li class="gallery-item__note">
           <p class="gallery-item__note-title">Likes</p>
@@ -61,10 +63,19 @@ export function createGallery(images) {
   const markup = images.map(generateImageMarkup).join('');
   gallery.insertAdjacentHTML('beforeend', markup);
   galleryLightbox.refresh();
+
+  if (!isGalleryEmpty) {
+    const item = gallery.querySelector('.gallery-item');
+    const rect = item.getBoundingClientRect();
+    window.scrollBy({ top: rect.height * 2, behavior: 'smooth' });
+  }
+
+  isGalleryEmpty = false;
 }
 
 export function clearGallery() {
   gallery.innerHTML = '';
+  isGalleryEmpty = true;
 }
 
 export function showLoader() {
