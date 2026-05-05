@@ -9,7 +9,7 @@
     <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
     <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-EfBoSD9D.js">
     <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-CX4EDM7x.css">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-D6mWm85j.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-COX42ITI.css">
   </head>
   <body>
     <header class="header">
@@ -26,7 +26,7 @@
 
 
     <main>
-      <div class="container">
+      <div class="container gallery-section">
         <form class="form search-form">
           <label class="search-form__query-input">
             <input
@@ -40,8 +40,12 @@
           <button type="submit" class="search-form__button">Search</button>
         </form>
 
-        <div class="gallery-loader">Loading images, please wait...</div>
         <ul class="gallery"></ul>
+        <div class="gallery-loader">Loading images, please wait...</div>
+        <button type="button" class="load-more-button">Load more</button>
+        <p class="no-more-images-message">
+          We're sorry, but you've reached the end of search results.
+        </p>
       </div>
     </main>
 
