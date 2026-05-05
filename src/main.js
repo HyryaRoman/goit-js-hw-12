@@ -51,10 +51,10 @@ function showErrorNotification(message) {
   console.error(message);
 }
 
-let shownImages = 0;
-let totalImages = 0;
+let totalImageCount = 0;
+let displayedImageCount = 0;
 let nextPage = 1;
-let lastQuery = '';
+let displayedQuery = '';
 
 async function updateGallery(query) {
   if (!query) {
@@ -62,13 +62,13 @@ async function updateGallery(query) {
     return;
   }
 
-  lastQuery = query;
-  shownImages = 0;
-  nextPage = 1;
-
   clearGallery();
   showLoader();
-  hideLoadMoreButton();
+
+  totalImageCount = 0;
+  displayedImageCount = 0;
+  nextPage = 1;
+  displayedQuery = query;
 
   try {
     const result = await getImagesByQuery(query);
@@ -78,27 +78,31 @@ async function updateGallery(query) {
       return;
     }
 
-    createGallery(result.images);
-    shownImages += result.images.length;
-    totalImages = result.total;
+    totalImageCount = result.total;
+    displayedImageCount += result.count;
     nextPage++;
+
+    createGallery(result.images);
   } catch (e) {
     showErrorNotification(e);
   } finally {
     hideLoader();
 
-    if (shownImages >= totalImages) {
-      hideLoadMoreButton();
-      showInfoNotification('No more images to load');
-    } else {
-      showLoadMoreButton();
+    if (totalImageCount > 0) {
+      if (displayedImageCount >= totalImageCount) {
+        showInfoNotification('No more images to load');
+        hideLoadMoreButton();
+      } else {
+        showLoadMoreButton();
+      }
     }
   }
 }
 
 async function loadMoreImages() {
-  if (shownImages >= totalImages) {
-    showErrorNotification('No more images to load');
+  if (displayedImageCount >= totalImageCount) {
+    showInfoNotification('No more images to load');
+    hideLoadMoreButton();
     return;
   }
 
@@ -107,21 +111,29 @@ async function loadMoreImages() {
 
   try {
     const result = await getImagesByQuery(lastQuery, nextPage);
+
+    if (result.total === 0) {
+      showErrorNotification('No images found');
+      return;
+    }
+
     createGallery(result.images);
 
-    shownImages += result.images.length;
+    displayedImageCount += result.count;
     nextPage++;
 
     const item = document.querySelector('.gallery-item');
-    const rect = item.getBoundingClientRect();
-    window.scrollBy({ top: rect.height * 2, behavior: 'smooth' });
+    if (item) {
+      const rect = item.getBoundingClientRect();
+      window.scrollBy({ top: rect.height * 2, behavior: 'smooth' });
+    }
   } catch (e) {
     showErrorNotification(e);
   } finally {
     hideLoader();
-    if (shownImages >= totalImages) {
-      hideLoadMoreButton();
+    if (displayedImageCount >= totalImageCount) {
       showInfoNotification('No more images to load');
+      hideLoadMoreButton();
     } else {
       showLoadMoreButton();
     }
