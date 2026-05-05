@@ -1,0 +1,44 @@
+.header {
+  padding: 20px 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 40px;
+}
+
+.nav-link {
+  position: relative;
+  display: block;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 110%;
+  height: 4px;
+  border-radius: 4px;
+  transform-origin: center;
+}
+
+.nav-link.active::after {
+  background: var(--primary-bg-color);
+}

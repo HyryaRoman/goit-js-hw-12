@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>JS-12</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <load src="./partials/header.html" />
+
+    <main>
+      <div class="container">
+        <form class="form search-form">
+          <label class="search-form__query-input">
+            <input
+              type="text"
+              name="search-text"
+              placeholder="Search images..."
+              required
+              class="input--text"
+            />
+          </label>
+          <button type="submit" class="search-form__button">Search</button>
+        </form>
+
+        <div class="gallery-loader">Loading images, please wait...</div>
+        <ul class="gallery"></ul>
+      </div>
+    </main>
+
+    <load src="./partials/footer.html" />
+  </body>
+</html>

@@ -1,0 +1,12 @@
+.footer {
+  padding: 20px 0;
+}
+
+.footer-desc {
+  text-align: center;
+}
+
+.footer-link {
+  display: inline-block;
+  text-decoration: underline dotted currentColor;
+}

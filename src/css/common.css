@@ -1,0 +1,44 @@
+:root {
+  --text-color: #2e2f42;
+  --background-color: #ffffff;
+
+  --primary-bg-color: #4e75ff;
+  --primary-hover-color: #6c8cff;
+  --primary-text-color: #ffffff;
+
+  --disabled-bg-color: #cfcfcf;
+  --disabled-text-color: #989898;
+
+  --toast-ok-bg-color: #59a10d;
+  --toast-ok-text-color: #ffffff;
+
+  --toast-error-bg-color: #ef4040;
+  --toast-error-text-color: #ffffff;
+
+  --input-normal-border: #808080;
+  --input-normal-bg: #ffffff;
+
+  --input-hover-border: #000000;
+  --input-hover-bg: #ffffff;
+
+  --input-active-border: var(--primary-bg-color);
+  --input-active-bg: #ffffff;
+
+  --input-disabled-border: #808080;
+  --input-disabled-bg: #fafafa;
+
+  --transition: 150ms ease-out;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
