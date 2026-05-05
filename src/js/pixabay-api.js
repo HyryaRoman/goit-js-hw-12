@@ -14,9 +14,5 @@ const pixabay = axios.create({
 
 export async function getImagesByQuery(query = '', page = 1) {
   const result = await pixabay.request({ params: { q: query, page } });
-  return {
-    total: result.data.totalHits,
-    count: result.data.hits.length,
-    images: result.data.hits,
-  };
+  return result.data;
 }

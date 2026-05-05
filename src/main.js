@@ -79,11 +79,11 @@ async function updateGallery(query) {
       return;
     }
 
-    totalImageCount = result.total;
-    displayedImageCount += result.count;
+    totalImageCount = result.totalHits;
+    displayedImageCount += result.hits.length;
     nextPage++;
 
-    createGallery(result.images);
+    createGallery(result.hits);
   } catch (e) {
     showErrorNotification(e);
   } finally {
@@ -113,15 +113,15 @@ async function loadMoreImages() {
   try {
     const result = await getImagesByQuery(displayedQuery, nextPage);
 
-    if (result.total === 0) {
+    if (result.totalHits === 0) {
       showInfoNotification('No images found');
       return;
     }
 
-    createGallery(result.images);
-
-    displayedImageCount += result.count;
+    displayedImageCount += result.hits.length;
     nextPage++;
+
+    createGallery(result.hits);
 
     const item = document.querySelector('.gallery-item');
     if (item) {
