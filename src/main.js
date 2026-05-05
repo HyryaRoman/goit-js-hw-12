@@ -81,19 +81,18 @@ async function updateGallery(query) {
     createGallery(result.images);
     shownImages += result.images.length;
     totalImages = result.total;
-    totalImages = 30;
     nextPage++;
   } catch (e) {
     showErrorNotification(e);
   } finally {
     hideLoader();
-  }
 
-  if (shownImages >= totalImages) {
-    hideLoadMoreButton();
-    showInfoNotification('No more images to load');
-  } else {
-    showLoadMoreButton();
+    if (shownImages >= totalImages) {
+      hideLoadMoreButton();
+      showInfoNotification('No more images to load');
+    } else {
+      showLoadMoreButton();
+    }
   }
 }
 
@@ -120,13 +119,12 @@ async function loadMoreImages() {
     showErrorNotification(e);
   } finally {
     hideLoader();
-  }
-
-  if (shownImages >= totalImages) {
-    hideLoadMoreButton();
-    showInfoNotification('No more images to load');
-  } else {
-    showLoadMoreButton();
+    if (shownImages >= totalImages) {
+      hideLoadMoreButton();
+      showInfoNotification('No more images to load');
+    } else {
+      showLoadMoreButton();
+    }
   }
 }
 
